@@ -9,15 +9,22 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "lowdb": "^1.0.0",
+    "node-podcast-parser": "^2.3.0",
+    "object-hash": "^2.0.0",
+    "request": "^2.88.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@koa/router": "^8.0.2",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "koa": "^2.11.0",
+    "koa-static": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

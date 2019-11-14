@@ -1,0 +1,80 @@
+{
+  "podcasts": [
+    {
+      "title": "Episodio 5: Siempre nos quedará París",
+      "enclosure": {
+        "filesize": 29988643,
+        "type": "audio/mpeg",
+        "url": "http://www.ivoox.com/episodio-5-siempre-nos-quedara-paris_mf_44109784_feed_1.mp3"
+      },
+      "description": "En este episodio comentamos sobre los resultados de la investigación sobre el fallecimiento de la niña Paloma Domínguez, las nuevas medidas para el sector por cuenta propia e invitamos al Doctor en Ciencias Económicas Pedro Monreal para hablar sobre la dolarización parcial de la economía cubana.",
+      "published": "2019-11-10T00:53:27.000Z",
+      "duration": 3748,
+      "episodeType": "full",
+      "guid": "http://www.ivoox.com/44109784"
+    },
+    {
+      "title": "Episodio 4: Llamamos a la caballería",
+      "enclosure": {
+        "filesize": 30351223,
+        "type": "audio/mpeg",
+        "url": "http://www.ivoox.com/episodio-4-llamamos-a-caballeria_mf_43835324_feed_1.mp3"
+      },
+      "description": "En este episodio invitamos al Dr. Julio Antonio Fernández Estrada, para conocer a fondo sobre la legalidad o procesos legales detrás de fenómenos como los \"regulados\" y las \"detenciones arbitrarias\" en Cuba. El Enjambre es un podcast de El Toque.",
+      "published": "2019-11-02T22:45:38.000Z",
+      "duration": 3793,
+      "episodeType": "full",
+      "guid": "http://www.ivoox.com/43835324"
+    },
+    {
+      "title": "Episodio 3: Tres tristes tramas",
+      "enclosure": {
+        "filesize": 29768587,
+        "type": "audio/mpeg",
+        "url": "http://www.ivoox.com/episodio-3-tres-tristes-tramas_mf_43554628_feed_1.mp3"
+      },
+      "description": "Este episodio está caliente, hablamos de las fakes news, las relaciones entre el gobierno cubano y su emigración y los regulados, tres temas, tres opiniones en este tercer capítulo de \"El Enjambre\" un podcast de \"El Toque...",
+      "published": "2019-10-26T20:15:43.000Z",
+      "duration": 3721,
+      "episodeType": "full",
+      "guid": "http://www.ivoox.com/43554628"
+    },
+    {
+      "title": "Episodio 2: Este no es el del bloqueo interno",
+      "enclosure": {
+        "filesize": 29391379,
+        "type": "audio/mpeg",
+        "url": "http://www.ivoox.com/episodio-2-este-no-es-del-bloqueo_mf_43279314_feed_1.mp3"
+      },
+      "description": "En este episodio hablamos de la triste noticia que fue el fallecimiento de Paloma y analizamos la importancia de las vacunas. Profundizamos en las medidas económicas anunciadas el pasado martes 15 de octubre y por supuesto, el tema de las nuevas sanciones a Cuba. El Enjambre es un podcast de El Toque",
+      "published": "2019-10-19T20:06:43.000Z",
+      "duration": 3673,
+      "episodeType": "full",
+      "guid": "http://www.ivoox.com/43279314"
+    },
+    {
+      "title": "Episodio 1: El comienzo de una cosa muy loca",
+      "enclosure": {
+        "filesize": 25361626,
+        "type": "audio/mpeg",
+        "url": "http://www.ivoox.com/episodio-1-el-comienzo-cosa-muy_mf_43004707_feed_1.mp3"
+      },
+      "description": "El Enjambre es un podcast para conversar sobre el universo del Twitter en Cuba, un pretexto para analizar todos los temas que ocurren en la semana y así es que llega este episodio, atípico, que marca el comienzo de esta cosa \"muy loca\".",
+      "published": "2019-10-12T19:31:44.000Z",
+      "duration": 3170,
+      "episodeType": "full",
+      "guid": "http://www.ivoox.com/43004707"
+    }
+  ],
+  "lasthash": "05029bb45c63b41256646e01977a121481fb9d0b",
+  "generaldata": {
+    "author": "El Enjambre",
+    "title": "El Enjambre",
+    "link": "http://www.ivoox.com/podcast-enjambre_sq_f1781784_1.html",
+    "description": {
+      "long": "El Enjambre es un podcast de &quot;El Toque&quot; para conversar sobre el universo del Twitter en Cuba, un pretexto para analizar todos los temas que ocurren en la semana"
+    },
+    "language": "es-es",
+    "image": "http://static-2.ivoox.com/canales/3/0/1/8/3551570908103_XXL.jpg"
+  }
+}

@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: NodeDockerfile
+    hostname: web
+    working_dir: /app
+    command: ["pm2-runtime","--raw" , "--output", "/var/log/web.log", "process.yml"]
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - web
+networks:
+  web:

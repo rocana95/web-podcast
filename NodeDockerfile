@@ -1,0 +1,6 @@
+FROM keymetrics/pm2:10-alpine
+
+COPY package.json /app/
+
+WORKDIR /app
+RUN npm install
