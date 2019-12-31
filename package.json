@@ -8,11 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "lowdb": "^1.0.0",
+    "node-lame": "^1.2.0",
     "node-podcast-parser": "^2.3.0",
     "object-hash": "^2.0.0",
     "request": "^2.88.0",
+    "telebot": "^1.2.6",
     "vue": "^2.6.10"
   },
   "devDependencies": {

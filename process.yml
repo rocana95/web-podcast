@@ -1,4 +1,4 @@
 apps:
   - script : 'node'
-    args   : 'index.js'
-    name   : 'web'
+    args   : 'telegramBot.js'
+    name   : 'bot'
