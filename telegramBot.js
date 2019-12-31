@@ -120,7 +120,7 @@ const findchapter = async (msg, props) => {
     }
 
 }
-bot.on(['/start'], (msg) => msg.reply.text('Para obetener una versión comprimida de un capítulo, escriba /cap [NUMERO].\nPor ejemplo: /cap 3'));
+bot.on(['/start'], (msg) => msg.reply.text('Para obetener una versión comprimida de un episodio, escriba /episodio [NUMERO].\nPor ejemplo: /episodio 3'));
 bot.on(/^\/episodio (.+)$/, findchapter);
 
 bot.start();

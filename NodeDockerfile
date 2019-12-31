@@ -1,4 +1,7 @@
 FROM keymetrics/pm2:10-alpine
+RUN apk update -f
+RUN apk upgrade -f
+RUN apk add lame
 
 COPY package.json /app/
 
