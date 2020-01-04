@@ -1,4 +1,8 @@
-const TELEGRAM_BOT_TOKEN = '915485564:AAEtQIcGy8neOcbRVfR9pQYYVl8bpCdeKiY'
+//TESTBOT TOKEN
+const TELEGRAM_BOT_TOKEN = '850261048:AAGQKxdamoGVLoOsiYXmq79OTSJl6IV0N8Y'
+
+
+// const TELEGRAM_BOT_TOKEN = '915485564:AAEtQIcGy8neOcbRVfR9pQYYVl8bpCdeKiY'
 
 const TeleBot = require('telebot');
 const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
@@ -122,18 +126,18 @@ const getAudio = async (msg, props, full) => {
         if (!podcast) {
             db
                 .get('podcasts')
-                .push({ name: `Episodio ${chapter}`, countfull: (full)?1:0, countcomp:(full)?0:1 })
+                .push({ name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
                 .write()
         } else {
             db.get('podcasts')
                 .find({ name: `Episodio ${chapter}` })
-                .update((full)?'countfull':'countcomp', n => n + 1)
+                .update((full) ? 'countfull' : 'countcomp', n => n + 1)
                 .write()
         }
 
 
         if (!isNaN(chapter)) {
-            // bot.sendMessage(msg.from.id, text, { replyToMessage: msg.message_id });
+            // msg.reply.text(text, { replyToMessage: msg.message_id });
             const file = await downloadAudio(chapter)
             let compressed
             if (full) {
@@ -143,36 +147,28 @@ const getAudio = async (msg, props, full) => {
             }
             console.log(file, 'DOWNLOADED')
             //TODO: Save stats
-            bot.sendAudio(msg.from.id, compressed, { replyToMessage: msg.message_id, title: `Episodio ${chapter} - El enjambre` })
+            msg.reply.audio(compressed, { title: `Episodio ${chapter} - El enjambre` })
         } else {
-            bot.sendMessage(msg.from.id, 'Debe escribir solo el número del episodio.', { replyToMessage: msg.message_id });
+            msg.reply.text('Debe escribir solo el número del episodio.');
         }
 
     } catch (err) {
-        bot.sendMessage(msg.from.id, 'Ha ocurrido un error procesando el episodio.', { replyToMessage: msg.message_id });
+        msg.reply.text('Ha ocurrido un error procesando el episodio.');
     }
 }
 
 const findchapter = async (msg, props) => {
-    try{
-        getAudio(msg, props, false)
-    } catch(err){
-        bot.sendMessage(msg.from.id, 'Ha ocurrido un error procesando el episodio.', { replyToMessage: msg.message_id });
-    }
+    getAudio(msg, props, false)
 }
 
 const findchapterfull = async (msg, props) => {
-    try{
-        getAudio(msg, props, true)
-    } catch(err){
-        bot.sendMessage(msg.from.id, 'Ha ocurrido un error procesando el episodio.', { replyToMessage: msg.message_id });
-    }
+    getAudio(msg, props, true)
 }
 
 const getstats = async (msg) => {
     const stats = db.get('podcasts')
-    const salida = stats.map(el=> `${el.name} - ${el.countcomp} comprimidas - ${el.countfull} calidad`).join('\n')
-    bot.sendMessage(msg.from.id, `Estadísticas de descargas: \n${salida}`, { replyToMessage: msg.message_id })
+    const salida = stats.map(el => `${el.name} - ${el.countcomp} comprimidas - ${el.countfull} calidad`).join('\n')
+    msg.reply.text(`Estadísticas de descargas: \n${salida}`)
 }
 
 bot.on(['/start', '/ayuda'], (msg) => {
