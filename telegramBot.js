@@ -154,11 +154,19 @@ const getAudio = async (msg, props, full) => {
 }
 
 const findchapter = async (msg, props) => {
-    getAudio(msg, props, false)
+    try{
+        getAudio(msg, props, false)
+    } catch(err){
+        bot.sendMessage(msg.from.id, 'Ha ocurrido un error procesando el episodio.', { replyToMessage: msg.message_id });
+    }
 }
 
 const findchapterfull = async (msg, props) => {
-    getAudio(msg, props, true)
+    try{
+        getAudio(msg, props, true)
+    } catch(err){
+        bot.sendMessage(msg.from.id, 'Ha ocurrido un error procesando el episodio.', { replyToMessage: msg.message_id });
+    }
 }
 
 const getstats = async (msg) => {
