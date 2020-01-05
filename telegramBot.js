@@ -1,8 +1,8 @@
 //TESTBOT TOKEN
-const TELEGRAM_BOT_TOKEN = '850261048:AAGQKxdamoGVLoOsiYXmq79OTSJl6IV0N8Y'
+// const TELEGRAM_BOT_TOKEN = '850261048:AAGQKxdamoGVLoOsiYXmq79OTSJl6IV0N8Y'
 
 
-// const TELEGRAM_BOT_TOKEN = '915485564:AAEtQIcGy8neOcbRVfR9pQYYVl8bpCdeKiY'
+const TELEGRAM_BOT_TOKEN = '915485564:AAEtQIcGy8neOcbRVfR9pQYYVl8bpCdeKiY'
 
 const TeleBot = require('telebot');
 const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
@@ -122,20 +122,6 @@ const getAudio = async (msg, props, full) => {
         const podcast = db.get('podcasts')
             .find({ name: `Episodio ${chapter}` })
             .value()
-
-        if (!podcast) {
-            db
-                .get('podcasts')
-                .push({ name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
-                .write()
-        } else {
-            db.get('podcasts')
-                .find({ name: `Episodio ${chapter}` })
-                .update((full) ? 'countfull' : 'countcomp', n => n + 1)
-                .write()
-        }
-
-
         if (!isNaN(chapter)) {
             // msg.reply.text(text, { replyToMessage: msg.message_id });
             const file = await downloadAudio(chapter)
@@ -144,6 +130,17 @@ const getAudio = async (msg, props, full) => {
                 compressed = file
             } else {
                 compressed = await compressAudio(chapter)
+            }
+            if (!podcast) {
+                db
+                    .get('podcasts')
+                    .push({ name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
+                    .write()
+            } else {
+                db.get('podcasts')
+                    .find({ name: `Episodio ${chapter}` })
+                    .update((full) ? 'countfull' : 'countcomp', n => n + 1)
+                    .write()
             }
             console.log(file, 'DOWNLOADED')
             //TODO: Save stats
