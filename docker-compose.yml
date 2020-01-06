@@ -7,8 +7,11 @@ services:
     hostname: web
     working_dir: /app
     command: ["pm2-runtime","--raw" , "--output", "/var/log/web.log", "process.yml"]
+    secrets:
+      - bot_token
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
+      TELEGRAM_BOT_TOKEN: /run/secrets/bot_token
     volumes:
       - .:/app
       - /app/node_modules
@@ -17,5 +20,9 @@ services:
     restart: always
     networks:
       - web
+
+secrets:                        # top level secrets block
+    bot_token:
+        file: ./token_bot_secret.ini
 networks:
   web:

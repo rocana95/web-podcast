@@ -1,11 +1,6 @@
-//TESTBOT TOKEN
-// const TELEGRAM_BOT_TOKEN = '850261048:AAGQKxdamoGVLoOsiYXmq79OTSJl6IV0N8Y'
-
-
-const TELEGRAM_BOT_TOKEN = '915485564:AAEtQIcGy8neOcbRVfR9pQYYVl8bpCdeKiY'
+// const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
 
 const TeleBot = require('telebot');
-const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
 const Path = require('path')
 const fs = require('fs')
 const Axios = require('axios')
@@ -16,6 +11,8 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('dbbot.json')
 const db = low(adapter)
 
+const TOKEN = (process.env.TELEGRAM_BOT_TOKEN) ? fs.readFileSync(process.env.TELEGRAM_BOT_TOKEN, 'utf8') : fs.readFileSync('token_bot_secret_test.ini', 'utf8')
+const bot = new TeleBot(TOKEN);
 
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ podcasts: [] })
