@@ -1,29 +1,26 @@
-# podcast
+# El Enjambre
 
-## Project setup
+## Producción
 ```
-npm install
+    docker-compose up -d
+```
+### Debe incluir el token del BOT en el fichero: **token_bot_secret.ini**
+
+## Desarrollo
+
+### Ejecutar el sitio web del podcast
+```
+node index.js
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
+### Compilar la plantilla el sitio web del podcast
 ```
 npm run build
 ```
 
-### Run your tests
+### Ejecutar el BOT de telegram que descarga los episodios
 ```
-npm run test
+node telegramBot.js
 ```
+### Debe incluir el tokens del BOT en el fichero: **token_bot_secret_test.ini**
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
