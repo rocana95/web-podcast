@@ -1,6 +1,11 @@
 .DS_Store
 node_modules
 /dist
+/audios
+token_bot_secret_test.ini
+token_bot_secret.ini
+db.json
+dbbot.json
 
 # local env files
 .env.local
