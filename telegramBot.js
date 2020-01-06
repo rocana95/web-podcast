@@ -53,7 +53,7 @@ async function downloadAudio(chapter) {
                     }
                 }
                 if (!url) {
-                    reject('Episodio no encontrado')
+                   return reject('Episodio no encontrado')
                 }
                 const writer = fs.createWriteStream(path);
                 const response = await Axios({
