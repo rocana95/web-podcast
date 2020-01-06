@@ -6,11 +6,13 @@
 ```
 ### Debe incluir el token del BOT en el fichero: **token_bot_secret.ini**
 
-## Desarrollo
+*Por ahora solo ejecuta el BOT utilizando una imagen de PM2 con node 10.*
 
-### Ejecutar el sitio web del podcast
+
+## Desarrollo
+### Instalar las dependencias
 ```
-node index.js
+npm install
 ```
 
 ### Compilar la plantilla el sitio web del podcast
@@ -18,9 +20,14 @@ node index.js
 npm run build
 ```
 
+### Ejecutar el sitio web del podcast
+```
+node index.js
+```
+
 ### Ejecutar el BOT de telegram que descarga los episodios
 ```
 node telegramBot.js
 ```
-### Debe incluir el tokens del BOT en el fichero: **token_bot_secret_test.ini**
+### Debe incluir el token del BOT en el fichero: **token_bot_secret_test.ini**
 
