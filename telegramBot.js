@@ -11,7 +11,14 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('dbbot.json')
 const db = low(adapter)
 
-const TOKEN = (process.env.TELEGRAM_BOT_TOKEN) ? fs.readFileSync(process.env.TELEGRAM_BOT_TOKEN, 'utf8') : fs.readFileSync('token_bot_secret_test.ini', 'utf8')
+function getToken() {
+	let token = (process.env.TELEGRAM_BOT_TOKEN) ?
+					fs.readFileSync(process.env.TELEGRAM_BOT_TOKEN, 'utf8') :
+					fs.readFileSync('token_bot_secret_test.ini', 'utf8');
+	return token.trim();
+}
+
+const TOKEN = getToken()
 const bot = new TeleBot(TOKEN);
 
 // Set some defaults (required if your JSON file is empty)
