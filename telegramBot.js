@@ -48,12 +48,12 @@ async function downloadAudio(chapter) {
                 const xml = await Axios.get('http://www.ivoox.com/enjambre_fg_f1781784_filtro_1.xml')
                 const datafeed = await asyncPodcastParser(xml.data)
                 for (let episode of datafeed.episodes) {
-                    if (episode.title.split(':')[0] == `Episodio ${chapter}`) {
+                    if (episode.title.split(':')[0].indexOf(`Episodio ${chapter}`) > -1) {
                         url = episode.enclosure.url
                     }
                 }
                 if (!url) {
-                   return reject('Episodio no encontrado')
+                    return reject('Episodio no encontrado')
                 }
                 const writer = fs.createWriteStream(path);
                 const response = await Axios({
@@ -141,7 +141,7 @@ const getAudio = async (msg, props, full) => {
             }
             console.log(file, 'DOWNLOADED')
             //TODO: Save stats
-            msg.reply.audio(compressed, { title: `Episodio ${chapter} - El enjambre` })
+            await msg.reply.audio({source: compressed}, { title: `Episodio ${chapter} - El enjambre` })
         } else {
             msg.reply.text('Debe escribir solo el número del episodio.');
         }
@@ -152,11 +152,20 @@ const getAudio = async (msg, props, full) => {
 }
 
 const findchapter = async (msg, props) => {
-    getAudio(msg, props, false)
+    try {
+        getAudio(msg, props, false)
+    } catch (err) {
+        console.log(err)
+    }
+
 }
 
 const findchapterfull = async (msg, props) => {
-    getAudio(msg, props, true)
+    try {
+        getAudio(msg, props, true)
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const getstats = async (msg) => {
