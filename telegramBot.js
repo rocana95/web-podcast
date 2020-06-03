@@ -148,7 +148,7 @@ const getAudio = async (msg, props, full) => {
             }
             console.log(file, 'DOWNLOADED')
             //TODO: Save stats
-            await msg.reply.audio({source: compressed}, { title: `Episodio ${chapter} - El enjambre` })
+            await msg.reply.audio(compressed, { title: `Episodio ${chapter} - El enjambre` })
         } else {
             msg.reply.text('Debe escribir solo el número del episodio.');
         }
