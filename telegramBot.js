@@ -12,10 +12,10 @@ const adapter = new FileSync('dbbot.json')
 const db = low(adapter)
 
 function getToken() {
-	let token = (process.env.TELEGRAM_BOT_TOKEN) ?
-					fs.readFileSync(process.env.TELEGRAM_BOT_TOKEN, 'utf8') :
-					fs.readFileSync('token_bot_secret_test.ini', 'utf8');
-	return token.trim();
+    let token = (process.env.TELEGRAM_BOT_TOKEN) ?
+        fs.readFileSync(process.env.TELEGRAM_BOT_TOKEN, 'utf8') :
+        fs.readFileSync('token_bot_secret_test.ini', 'utf8');
+    return token.trim();
 }
 
 const TOKEN = getToken()
@@ -121,7 +121,6 @@ async function compressAudio(chapter) {
 const getAudio = async (msg, props, full) => {
     try {
         const chapter = props.match[1];
-
         //SAVE STATS
         const podcast = db.get('podcasts')
             .find({ name: `Episodio ${chapter}` })
@@ -135,25 +134,43 @@ const getAudio = async (msg, props, full) => {
             } else {
                 compressed = await compressAudio(chapter)
             }
+            let file_id = ""
             if (!podcast) {
+                // const form = {chat_id: 388031459, title: "Episodio 33 - El enjambre", audio: {value: fs.createReadStream(file), options: {filename: "33.mp3"}}}
+                //TODO: Upload file to TL
+                // axios.post("https://api.telegram.org/bot850261048:AAGvIj0I93u9tGM_oocCQqqO7saVmfGzlxU/sendAudio"    , null, )
+                try {
+                    const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
+                    file_id = pod.audio.file_id
+                } catch (err) {
+                    console.log(err)
+                    if (err.error_code == 413) {
+                        msg.reply.text('El episodio pesa más de 50MB.');
+                    }
+                }
                 db
                     .get('podcasts')
-                    .push({ name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
+                    .push({ file_id: file_id, name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
                     .write()
             } else {
-                db.get('podcasts')
+                const pod = db.get('podcasts')
                     .find({ name: `Episodio ${chapter}` })
-                    .update((full) ? 'countfull' : 'countcomp', n => n + 1)
+                file_id = pod.value().file_id
+                pod.update((full) ? 'countfull' : 'countcomp', n => n + 1)
                     .write()
             }
             console.log(file, 'DOWNLOADED')
-            //TODO: Save stats
-            await msg.reply.audio(compressed, { title: `Episodio ${chapter} - El enjambre` })
+            if (file_id) {
+                await bot.sendAudio(msg.chat.id, file_id, { title: `Episodio ${chapter} - El enjambre` })
+            } else {
+                await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
+            }
         } else {
             msg.reply.text('Debe escribir solo el número del episodio.');
         }
 
     } catch (err) {
+        console.log(err)
         msg.reply.text('Ha ocurrido un error procesando el episodio.');
     }
 }
@@ -185,6 +202,18 @@ bot.on(['/start', '/ayuda'], (msg) => {
     msg.reply.text('Para obtener la versión comprimida de un episodio, escriba /comprimido [NÚMERO].\nPor ejemplo: /comprimido 3 \n');
     msg.reply.text('Si deseas escuchar el episodio en buena calidad, escriba /episodio [NÚMERO].\nPor ejemplo: /episodio 3 \n');
     msg.reply.text('Para ver las estadísticas de descargas, escriba /estadisticas');
+
+})
+
+bot.on('audio', (msg) => {
+    console.log(msg)
+    if (!isNaN(msg.caption) && (msg.from.id == 388031459 || msg.from.id == 494968529)) {
+        db.get('podcasts')
+            .find({ name: `Episodio ${msg.caption}` })
+            .assign({ "file_id": msg.audio.file_id })
+            .write()
+        msg.reply.text('Nuevo Audio recibido')
+    }
 
 })
 bot.on(/^\/comprimido (.+)$/, findchapter);
