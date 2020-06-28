@@ -138,20 +138,15 @@ const getAudio = async (msg, props, full) => {
             let file_id_full = ""
             let file_id = ""
             if (!podcast) {
-                try {
-                    const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
-                    file_id = pod.audio.file_id
-                    if (full) {
-                        file_id_full = pod.audio.file_id
-                    } else {
-                        file_id_compressed = pod.audio.file_id
-                    }
-                } catch (err) {
-                    console.log(err)
-                    if (err.error_code == 413) {
-                        msg.reply.text('El episodio pesa más de 50MB.');
-                    }
+
+                const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
+                file_id = pod.audio.file_id
+                if (full) {
+                    file_id_full = pod.audio.file_id
+                } else {
+                    file_id_compressed = pod.audio.file_id
                 }
+
                 db
                     .get('podcasts')
                     .push({ file_id_compressed: file_id_compressed, file_id_full: file_id_full, name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
@@ -181,6 +176,10 @@ const getAudio = async (msg, props, full) => {
     } catch (err) {
         console.log(err)
         msg.reply.text('Ha ocurrido un error procesando el episodio.');
+        if (err.error_code == 413) {
+            msg.reply.text('El episodio pesa más de 50MB.');
+        }
+
     }
 }
 
