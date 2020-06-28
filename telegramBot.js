@@ -138,9 +138,6 @@ const getAudio = async (msg, props, full) => {
             let file_id_full = ""
             let file_id = ""
             if (!podcast) {
-                // const form = {chat_id: 388031459, title: "Episodio 33 - El enjambre", audio: {value: fs.createReadStream(file), options: {filename: "33.mp3"}}}
-                //TODO: Upload file to TL
-                // axios.post("https://api.telegram.org/bot850261048:AAGvIj0I93u9tGM_oocCQqqO7saVmfGzlxU/sendAudio"    , null, )
                 try {
                     const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
                     file_id = pod.audio.file_id
