@@ -134,6 +134,8 @@ const getAudio = async (msg, props, full) => {
             } else {
                 compressed = await compressAudio(chapter)
             }
+            let file_id_compressed = ""
+            let file_id_full = ""
             let file_id = ""
             if (!podcast) {
                 // const form = {chat_id: 388031459, title: "Episodio 33 - El enjambre", audio: {value: fs.createReadStream(file), options: {filename: "33.mp3"}}}
@@ -142,6 +144,11 @@ const getAudio = async (msg, props, full) => {
                 try {
                     const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
                     file_id = pod.audio.file_id
+                    if (full) {
+                        file_id_full = pod.audio.file_id
+                    } else {
+                        file_id_compressed = pod.audio.file_id
+                    }
                 } catch (err) {
                     console.log(err)
                     if (err.error_code == 413) {
@@ -150,12 +157,12 @@ const getAudio = async (msg, props, full) => {
                 }
                 db
                     .get('podcasts')
-                    .push({ file_id: file_id, name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
+                    .push({ file_id_compressed: file_id_compressed, file_id_full: file_id_full, name: `Episodio ${chapter}`, countfull: (full) ? 1 : 0, countcomp: (full) ? 0 : 1 })
                     .write()
             } else {
                 const pod = db.get('podcasts')
                     .find({ name: `Episodio ${chapter}` })
-                file_id = pod.value().file_id
+                file_id = (full) ? pod.value().file_id_full : pod.value().file_id_compressed
                 pod.update((full) ? 'countfull' : 'countcomp', n => n + 1)
                     .write()
             }
@@ -163,7 +170,12 @@ const getAudio = async (msg, props, full) => {
             if (file_id) {
                 await bot.sendAudio(msg.chat.id, file_id, { title: `Episodio ${chapter} - El enjambre` })
             } else {
-                await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
+                const pod = await bot.sendAudio(msg.chat.id, compressed, { title: `Episodio ${chapter} - El enjambre` })
+                file_id = pod.audio.file_id
+                db.get('podcasts')
+                    .find({ name: `Episodio ${chapter}` })
+                    .assign((full) ? { 'file_id_full': file_id } : { 'file_id_compressed': file_id })
+                    .write()
             }
         } else {
             msg.reply.text('Debe escribir solo el número del episodio.');
@@ -210,7 +222,7 @@ bot.on('audio', (msg) => {
     if (!isNaN(msg.caption) && (msg.from.id == 388031459 || msg.from.id == 494968529)) {
         db.get('podcasts')
             .find({ name: `Episodio ${msg.caption}` })
-            .assign({ "file_id": msg.audio.file_id })
+            .assign({ "file_id_full": msg.audio.file_id })
             .write()
         msg.reply.text('Nuevo Audio recibido')
     }
